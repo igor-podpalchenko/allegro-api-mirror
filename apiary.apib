@@ -1,9 +1,47 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://api.mgduke.com/
 
 # Allegro
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+This API defines unified specification for the following service API's:
+
+- Device firmware auto update
+- User authentication
+- Device authentication
+- Device synchronization
+- Device historical reports (OBD key-value pairs, GPS data, Accelerometer data).
+- Events processing API
+- Device notification (audio, mobile push, email, IFTT)
+- Device events trigger
+
+## HTTP methods
+
+There are two kinds of API, `producer` read/write mostly
+and `consumer` which is essentially has a read only only.
+
+Consumers can `GET` resources. 
+Producers can `POST`, `PUT`, `COPY`, `HEAD`, `DELETE` resources.
+
+## Device Authentication
+
+Device authentication is implemented using JWT (Bearer Token) approach
+
+- Apiary authentication guide - https://help.apiary.io/api_101/authentication/#token
+- Bearer Token implementation in Apiary - https://help.apiary.io/api_101/authentication/#token
+- Nginx Plus natively supported - https://www.nginx.com/blog/authenticating-api-clients-jwt-nginx-plus/
+- Is part of OpenID spec (OAuth 2.0 ecosystem) - http://openid.net/connect/
+- Detailed IETF doc - https://tools.ietf.org/html/rfc7519
+- JWT example - http://docs.apiaryauthorizationapi.apiary.io/#reference/0/jwt-validation
+
+
+## Response Codes
+
+* 200 (OK) - request good!
+* 302 (Found) - the root `/`, redirects to `/heartbeat`, and `/docs` redirects to these documents
+* 400 (Bad request) - occurs when you have a malformed request, fix it and try again
+* 404 (Not found) - occurs when you request a route that does not exist, fix it and try again
+* 500 (Internal server error) - Server got itself in trouble; get in touch with us.
+
 
 ## Questions Collection [/questions]
 
