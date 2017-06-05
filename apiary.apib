@@ -22,6 +22,14 @@ and `consumer` which is essentially has a read only only.
 Consumers can `GET` resources. 
 Producers can `POST`, `PUT`, `COPY`, `HEAD`, `DELETE` resources.
 
+## Response Codes
+
+* 200 (OK) - request good!
+* 302 (Found) - the root `/`, redirects to `/heartbeat`, and `/docs` redirects to these documents
+* 400 (Bad request) - occurs when you have a malformed request, fix it and try again
+* 404 (Not found) - occurs when you request a route that does not exist, fix it and try again
+* 500 (Internal server error) - Server got itself in trouble; get in touch with us.
+
 ## Device Authentication
 
 Device authentication is implemented using JWT (Bearer Token) approach
@@ -33,14 +41,56 @@ Device authentication is implemented using JWT (Bearer Token) approach
 - Detailed IETF doc - https://tools.ietf.org/html/rfc7519
 - JWT example - http://docs.apiaryauthorizationapi.apiary.io/#reference/0/jwt-validation
 
+## OAuth token exchange [/oauth/token]
+Exchange credentials for `access_token`. Supported types:
 
-## Response Codes
++ `client_credentials`
++ [`urn:ietf:params:oauth:grant-type:jwt-bearer`](https://tools.ietf.org/html/draft-jones-oauth-jwt-bearer-03#section-6)
 
-* 200 (OK) - request good!
-* 302 (Found) - the root `/`, redirects to `/heartbeat`, and `/docs` redirects to these documents
-* 400 (Bad request) - occurs when you have a malformed request, fix it and try again
-* 404 (Not found) - occurs when you request a route that does not exist, fix it and try again
-* 500 (Internal server error) - Server got itself in trouble; get in touch with us.
+### Exchange credentials for token [POST]
++ Request
+    + Attributes (OAuth grant request)
+    + Headers
+
+            Authorization: Basic ABCDEF
+
++ Response 200 (application/json)
+    + Attributes (OAuth valid response)
+
++ Request
+    + Attributes (OAuth jwt bearer grant request)
+
++ Response 200 (application/json)
+    + Attributes (OAuth valid response)
+
+## OAuth 2 Bearer Token protected resource [/protected]
+### Status [GET]
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
++ Response 200 (application/json)
+    + Attributes (Server response)
+
+# Data Structures
+## OAuth grant request (object)
++ `grant_type`: `client_credentials` (string, required)
+
+## OAuth jwt bearer grant request (object)
++ `grant_type`: `urn:ietf:params:oauth:grant-type:jwt-bearer` (string, required)
++ assertion: `eyJhbGciOiJIUzI1NiJ9.e30.XmNK3GpH3Ys_7wsYBfq4C3M6goz71I7dTgUkuIa5lyQ` (string, required)
+
+## OAuth valid response (object)
++ `access_token`: `eyJhbGciOiJIUzI1NiJ9.e30.XmNK3GpH3Ys_7wsYBfq4C3M6goz71I7dTgUkuIa5lyQ` (string, required) - valid JWT
++ scope: all (string, required) - scopes of current token
++ `expires_in`: 300 (number, required)
++ `token_type`: Bearer (string, required)
+
+## Server response (object)
++ status: ok (string, required)
+
+
 
 
 ## Questions Collection [/questions]
