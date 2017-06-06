@@ -3,32 +3,9 @@ HOST: http://api.mgduke.com/
 
 # Allegro
 
-This API defines unified specification for the following service API's:
+Our API is orginized as a set of plain [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) services.
 
-
-Auth:
-
-- User authentication ( login + password -> grants API consumer access_token )
-- Device authentication ( Hardware ID hash + secret key -> grants API producer access_token )
-
-Core:
-
-- Device firmware auto update ( By Device HW ID (SHA5) -> Device model range (RPI1) fallback )
-- Device feed synchronization ( auth by producer access_token, device -> server main feed )
-- Device feed forwarder ( auth by consumer access_token, configurable feed forwarder )
-- Device realtime callbacks ( auth by consumer access_token, rules for IO - triggered callbacks )
-
-Services:
-
-- Device historical reports ( auth by consumer access_token, OBD key-value pairs, GPS data, Accelerometer data )
-- Geofence ( auth by consumer access_token, API operates with GPS coordinates + radius and enter & exit events )
-- Diagnostic notifications ( auth by consumer access_token, for pushing diagnostic warnings & errors )
-- Events notification ( auth by consumer access_token, audio, mobile push, email, IFTT, achivements engine )
-
-
-## HTTP methods
-
-There are two major roles for API usage, `producer` read/write mostly
+There are two major security roles for API usage, `producer` read/write access
 and `consumer` which is essentially has a read only access.
 
 Consumers can `GET` resources.
@@ -41,6 +18,32 @@ Producers can `POST`, `PUT`, `COPY`, `HEAD`, `DELETE` resources.
 * 400 (Bad request) - occurs when you have a malformed request, fix it and try again
 * 404 (Not found) - occurs when you request a route that does not exist, fix it and try again
 * 500 (Internal server error) - Server got itself in trouble; get in touch with us.
+
+
+# Group Auth
+
+- User authentication ( login + password -> grants API consumer access_token )
+- Device authentication ( Hardware ID hash + secret key -> grants API producer access_token )
+
+# Group Core
+
+- Device firmware auto update ( By Device HW ID (SHA5) -> Device model range (RPI1) fallback )
+- Device feed synchronization ( auth by producer access_token, device -> server main feed )
+- Device feed forwarder ( auth by consumer access_token, configurable feed forwarder )
+- Device realtime callbacks ( auth by consumer access_token, rules for IO - triggered callbacks )
+
+# Group Device <-> mobile
+
+- Phone sensors API (date, GPS, accelerometer)
+- Batch feed synchronization via Bluetooth LE bridge (device -> bluetooth le -> phone -> internet -> server).
+
+# Group Aggregation services
+
+- Device historical reports ( auth by consumer access_token, OBD key-value pairs, GPS data, Accelerometer data )
+- Geofence ( auth by consumer access_token, API operates with GPS coordinates + radius and enter & exit events )
+- Diagnostic notifications ( auth by consumer access_token, for pushing diagnostic warnings & errors )
+- Events notification ( auth by consumer access_token, audio, mobile push, email, IFTT, achivements engine )
+
 
 ## Device Authentication
 
