@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://api.mgduke.com/
+HOST: http://api.mgduke.com/v1/
 
 # Allegro
 
@@ -20,13 +20,17 @@ HTTP status codes meaning
 * 404 (Not found) - occurs when you request a route that does not exist, fix it and try again
 * 500 (Internal server error) - Server got itself in trouble; get in touch with us.
 
+There are following API subsystems available.
+
+* Auth - responsible for device and user authentication and API load balancing
+* Device Core - services for synchronization of device data and other device related API's
 
 # Group Auth
 
 - User authentication ( login + password -> grants API consumer access_token )
 - Device authentication ( Hardware ID hash + secret key -> grants API producer access_token )
 
-# Group Core
+# Group Device Core
 
 - Device firmware auto update ( By Device HW ID (SHA5) -> Device model range (RPI1) fallback )
 - Device feed synchronization ( auth by producer access_token, device -> server main feed )
@@ -35,6 +39,7 @@ HTTP status codes meaning
 
 # Group Device <-> mobile
 
+- Device configuration 
 - Phone sensors API (date, GPS, accelerometer)
 - Batch feed synchronization via Bluetooth LE bridge (device -> bluetooth le -> phone -> internet -> server).
 
