@@ -5,21 +5,33 @@ HOST: http://api.mgduke.com/
 
 This API defines unified specification for the following service API's:
 
-- Device firmware auto update
-- User authentication
-- Device authentication
-- Device synchronization
-- Device historical reports (OBD key-value pairs, GPS data, Accelerometer data).
-- Events processing API
-- Device notification (audio, mobile push, email, IFTT)
-- Device events trigger
+
+Auth:
+
+- User authentication ( login + password -> grants API consumer access_token )
+- Device authentication ( Hardware ID hash + secret key -> grants API producer access_token )
+
+Core:
+
+- Device firmware auto update ( By Device HW ID (SHA5) -> Device model range (RPI1) fallback )
+- Device feed synchronization ( auth by producer access_token, device -> server main feed )
+- Device feed forwarder ( auth by consumer access_token, configurable feed forwarder )
+- Device realtime callbacks ( auth by consumer access_token, rules for IO - triggered callbacks )
+
+Services:
+
+- Device historical reports ( auth by consumer access_token, OBD key-value pairs, GPS data, Accelerometer data )
+- Geofence ( auth by consumer access_token, API operates with GPS coordinates + radius and enter & exit events )
+- Diagnostic notifications ( auth by consumer access_token, for pushing diagnostic warnings & errors )
+- Events notification ( auth by consumer access_token, audio, mobile push, email, IFTT, achivements engine )
+
 
 ## HTTP methods
 
-There are two kinds of API, `producer` read/write mostly
-and `consumer` which is essentially has a read only only.
+There are two major roles for API usage, `producer` read/write mostly
+and `consumer` which is essentially has a read only access.
 
-Consumers can `GET` resources. 
+Consumers can `GET` resources.
 Producers can `POST`, `PUT`, `COPY`, `HEAD`, `DELETE` resources.
 
 ## Response Codes
@@ -43,6 +55,9 @@ Device authentication is implemented using JWT (Bearer Token) approach
 - Is part of OpenID spec (OAuth 2.0 ecosystem) - http://openid.net/connect/
 - Detailed IETF doc - https://tools.ietf.org/html/rfc7519
 
+## GeoFence API
+
+Geofence API example () - https://developer.android.com/training/location/geofencing.html
 
 ## OAuth token exchange [/oauth/token]
 Exchange credentials for `access_token`. Supported types:
