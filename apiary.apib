@@ -4,6 +4,7 @@ HOST: http://api.mgduke.com/
 # Allegro
 
 Our API is orginized as a set of plain [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) services.
+Which operates defined data entiries.
 
 There are two major security roles for API usage, `producer` read/write access
 and `consumer` which is essentially has a read only access.
@@ -11,10 +12,10 @@ and `consumer` which is essentially has a read only access.
 Consumers can `GET` resources.
 Producers can `POST`, `PUT`, `COPY`, `HEAD`, `DELETE` resources.
 
-## Response Codes
+HTTP status codes meaning
 
 * 200 (OK) - request good!
-* 302 (Found) - the root `/`, redirects to `/heartbeat`, and `/docs` redirects to these documents
+* 302 (Found) - Redirects
 * 400 (Bad request) - occurs when you have a malformed request, fix it and try again
 * 404 (Not found) - occurs when you request a route that does not exist, fix it and try again
 * 500 (Internal server error) - Server got itself in trouble; get in touch with us.
@@ -46,6 +47,8 @@ Producers can `POST`, `PUT`, `COPY`, `HEAD`, `DELETE` resources.
 
 
 ## Device Authentication
+
+Internal API for device authentication.
 
 Device authentication is implemented using JWT (Bearer Token) approach
 
